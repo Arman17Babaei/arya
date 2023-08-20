@@ -1,0 +1,255 @@
+// Config file of V2Ray. This file follows standard JSON format, with comments support.
+// Uncomment entries below to satisfy your needs. Also read our manual for more detail at
+// https://www.v2ray.com/
+{
+	"log": {
+		// Log level, one of "debug", "info", "warning", "error", "none"
+		"loglevel": "warning"
+	},
+	// List of inbound proxy configurations.
+	"inbounds": [
+		{
+			"port": 9090,
+			"listen": "0.0.0.0",
+			"tag": "ngrok",
+			"protocol": "http",
+			"settings": {
+				"accounts": [
+					{
+						"user": "username",
+						"pass": "my-genius-password"
+					}
+				],
+				"allowTransparent": true,
+				"userLevel": 0
+			}
+		},
+		{
+			"port": 8080,
+			"listen": "127.0.0.1",
+			"tag": "http-inbound",
+			"protocol": "http",
+			"settings": {
+				"accounts": [
+					{
+						"user": "username",
+						"pass": "my-genius-password"
+					}
+				],
+				"allowTransparent": true,
+				"userLevel": 0
+			}
+		},
+		{
+			// Port to listen on. You may need root access if the value is less than 1024.
+			"port": 1080,
+			// IP address to listen on. Change to "0.0.0.0" to listen on all network interfaces.
+			"listen": "127.0.0.1",
+			// Tag of the inbound proxy. May be used for routing.
+			"tag": "socks-inbound",
+			// Protocol name of inbound proxy.
+			"protocol": "socks",
+			// Settings of the protocol. Varies based on protocol.
+			"settings": {
+				"auth": "noauth",
+				"udp": false,
+				"ip": "127.0.0.1"
+			},
+			// Enable sniffing on TCP connection.
+			"sniffing": {
+				"enabled": true,
+				// Target domain will be overriden to the one carried by the connection, if the connection is HTTP or HTTPS.
+				"destOverride": [
+					"http",
+					"tls"
+				]
+			}
+		}
+	],
+	// List of outbound proxy configurations.
+	"outbounds": [
+		{
+			"mux": {
+				"concurrency": 8,
+				"enabled": true
+			},
+			"protocol": "vmess",
+			"settings": {
+				"vnext": [
+					{
+						"address": "new.yedoneanar.ir",
+						"port": 80,
+						"users": [
+							{
+								"alterId": 0,
+								"encryption": "",
+								"flow": "",
+								"id": "e70fe9cf-fc44-43b6-bc23-bdc2a12daa0c",
+								"level": 8,
+								"security": "chacha20-poly1305"
+							}
+						]
+					}
+				]
+			},
+			"streamSettings": {
+				"network": "ws",
+				"security": "",
+				"wsSettings": {
+					"headers": {
+						"Host": ""
+					},
+					"path": "/graphql"
+				}
+			},
+			"tag": "proxy-new-2"
+		},
+		{
+			"mux": {
+				"concurrency": 8,
+				"enabled": true
+			},
+			"protocol": "vmess",
+			"settings": {
+				"vnext": [
+					{
+						"address": "jalali.amirmahdikousheshi.ir",
+						"port": 80,
+						"users": [
+							{
+								"alterId": 0,
+								"encryption": "",
+								"flow": "",
+								"id": "778f31ad-c2aa-4e19-847e-8be4a29c8b97",
+								"level": 8,
+								"security": "chacha20-poly1305"
+							}
+						]
+					}
+				]
+			},
+			"streamSettings": {
+				"network": "ws",
+				"security": "",
+				"wsSettings": {
+					"headers": {
+						"Host": ""
+					},
+					"path": "/graphql"
+				}
+			},
+			"tag": "proxy-vije"
+		},
+		{
+			"protocol": "freedom",
+			"settings": {},
+			"tag": "direct-default"
+		},
+		{
+			"mux": {},
+			"protocol": "vmess",
+			"sendThrough": "0.0.0.0",
+			"settings": {
+				"vnext": [
+					{
+						"address": "v3.naserbidarsho.ir",
+						"port": 443,
+						"users": [
+							{
+								"alterId": 1,
+								"id": "c80555ca-8518-4b24-aeff-37d2ab4d07ae"
+							}
+						]
+					}
+				]
+			},
+			"streamSettings": {
+				"network": "ws",
+				"security": "tls",
+				"tlsSettings": {
+					"disableSystemRoot": false
+				},
+				"wsSettings": {
+					"path": "/graphql"
+				},
+				"xtlsSettings": {
+					"disableSystemRoot": false
+				}
+			},
+			"tag": "PROXY"
+		},
+		{
+			"mux": {
+				"concurrency": 8,
+				"enabled": true
+			},
+			"protocol": "vmess",
+			"settings": {
+				"vnext": [
+					{
+						"address": "arg.amirmahdikousheshi.ir",
+						"port": 80,
+						"users": [
+							{
+								"alterId": 0,
+								"encryption": "",
+								"flow": "",
+								"id": "23fb58b3-bfcd-40e7-890b-a74cf3fdf80f",
+								"level": 8,
+								"security": "chacha20-poly1305"
+							}
+						]
+					}
+				]
+			},
+			"streamSettings": {
+				"network": "ws",
+				"security": "",
+				"wsSettings": {
+					"headers": {
+						"Host": ""
+					},
+					"path": "/graphql"
+				}
+			},
+			"tag": "proxy-amirmahdi"
+		},
+		{
+			"protocol": "freedom",
+			"settings": {},
+			"tag": "direct"
+		},
+		{
+			"protocol": "blackhole",
+			"settings": {},
+			"tag": "blocked"
+		}
+	],
+	// Transport is for global transport settings. If you have multiple transports with same settings
+	// (say mKCP), you may put it here, instead of in each individual inbound/outbounds.
+	//"transport": {},
+	// Routing controls how traffic from inbounds are sent to outbounds.
+	"routing": {
+		"domainStrategy": "IPIfNonMatch",
+		"rules": [
+			{
+				"type": "field",
+				"domain": "*.goodreads.com",
+				"outboundTag": "proxy-vije"
+			},
+			{
+				"type": "field",
+				"domain": "*.ir",
+				"outboundTag": "direct"
+			},
+			{
+				// Blocks major ads.
+				"type": "field",
+				"domain": [
+					"geosite:category-ads"
+				],
+				"outboundTag": "blocked"
+			}
+		]
+	}
+}
